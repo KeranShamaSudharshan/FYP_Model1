@@ -1,0 +1,45 @@
+
+DATA PROCESSING RULES FOR MODEL TRAINING
+=========================================
+
+1. INITIAL CLUSTERING (Quiz# = 0):
+   - Use initial Yes/No questions (Question Type = 'Initial_YesNo')
+   - Features: Response Time, Network metrics (RTT, Jitter, Stability)
+   - Purpose: Initial engagement level prediction before quiz starts
+
+2. FOR COMPLETED QUESTIONS (Attempt Status = 'Completed'):
+   - Use ONLY: Response Time (sec) and Is Correct
+   - DO NOT USE: Network parameters (RTT, Jitter, Stability, Network Quality)
+   - Reason: Student successfully completed, network is not a factor
+
+3. FOR NOT COMPLETED QUESTIONS (Attempt Status = 'Not Completed'):
+   - Use: Response Time (sec), Network parameters (RTT, Jitter, Stability)
+   - Reason: Need to verify if network issue caused non-completion
+   - Cross-reference with Participant_Tracking.csv for verification
+
+4. PARTICIPANT TRACKING VALIDATION:
+   - Check 'Participant_Tracking.csv' for join/leave events
+   - Validate completion rate with Had Network Issue flag
+   - If completion rate < 70% AND Had Network Issue = True: Consider network as factor
+   - If completion rate < 70% AND Had Network Issue = False: Consider engagement issue
+
+5. FEATURE SELECTION BY QUESTION STATUS:
+   
+   Completed Questions:
+   - Response Time (sec)
+   - Is_Correct_Binary
+   - Student_Avg_Accuracy
+   - Student_Avg_Response_Time
+   
+   Not Completed Questions:
+   - Response Time (sec) [will be high]
+   - RTT (ms)
+   - Jitter (ms)
+   - Stability (%)
+   - Network_Quality_Encoded
+   - Cross-check with Participant_Tracking data
+
+6. MODEL TRAINING STRATEGY:
+   - Initial Model: Train on Quiz# = 0 (initial questions) for baseline clustering
+   - Main Model: Separate handling for Completed vs Not Completed
+   - Use weighted approach or ensemble model
