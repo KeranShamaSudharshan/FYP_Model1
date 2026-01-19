@@ -14,7 +14,9 @@ from models.clustering_model import PredictiveClusteringModel
 from models.question_targeting import QuestionTriggeringModule
 from models.feedback_generation import FeedbackGenerator
 import warnings
-warnings.filterwarnings('ignore')
+# Suppress only specific warnings that are expected
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=UserWarning, module='sklearn')
 
 
 class StudentEngagementPipeline:

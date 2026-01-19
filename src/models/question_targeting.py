@@ -12,10 +12,16 @@ from typing import List, Dict, Optional
 class QuestionTriggeringModule:
     """Handles targeted question delivery based on student clusters"""
     
-    def __init__(self):
-        """Initialize the question triggering module"""
+    def __init__(self, random_state=42):
+        """
+        Initialize the question triggering module
+        
+        Args:
+            random_state: Random seed for reproducible question selection
+        """
         self.question_types = ['cluster_based', 'generic', 'random']
         self.cluster_labels = {0: 'Passive', 1: 'Moderate', 2: 'Active'}
+        self.random_state = random_state
         
         # Question difficulty mapping based on cluster
         self.difficulty_map = {
@@ -189,7 +195,7 @@ class QuestionTriggeringModule:
             return None
         
         # Select a random question from the filtered set
-        question = cluster_questions.sample(n=1).iloc[0]
+        question = cluster_questions.sample(n=1, random_state=self.random_state).iloc[0]
         
         return question.to_dict()
     
@@ -210,7 +216,7 @@ class QuestionTriggeringModule:
             return None
         
         # Select a random question
-        question = generic_questions.sample(n=1).iloc[0]
+        question = generic_questions.sample(n=1, random_state=self.random_state).iloc[0]
         
         return question.to_dict()
     
@@ -226,7 +232,7 @@ class QuestionTriggeringModule:
             return None
         
         # Select any random question
-        question = self.questions.sample(n=1).iloc[0]
+        question = self.questions.sample(n=1, random_state=self.random_state).iloc[0]
         
         return question.to_dict()
     

@@ -12,9 +12,16 @@ import os
 class FeedbackGenerator:
     """Rule-based feedback generation with template-based approach"""
     
-    def __init__(self):
-        """Initialize the feedback generator"""
+    def __init__(self, random_state=42):
+        """
+        Initialize the feedback generator
+        
+        Args:
+            random_state: Random seed for reproducible feedback generation
+        """
         self.cluster_labels = {0: 'Passive', 1: 'Moderate', 2: 'Active'}
+        self.random_state = random_state
+        np.random.seed(random_state)
         
         # Feedback templates for different scenarios
         self.feedback_templates = {

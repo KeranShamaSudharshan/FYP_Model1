@@ -193,14 +193,19 @@ class PredictiveClusteringModel:
         """
         Perform elbow method to find optimal number of clusters
         
+        Note: This method runs K-means clustering multiple times (k=2 to max_clusters)
+        which can be computationally expensive for large datasets. For faster execution
+        during testing, consider reducing max_clusters parameter.
+        
         Args:
             X: Feature matrix
-            max_clusters: Maximum number of clusters to try
+            max_clusters: Maximum number of clusters to try (default: 10)
             
         Returns:
             Dictionary with inertia values
         """
         print("\nPerforming Elbow Method Analysis...")
+        print(f"Testing K from 2 to {max_clusters} (this may take a moment)...")
         
         if isinstance(X, pd.DataFrame):
             X = X.values
