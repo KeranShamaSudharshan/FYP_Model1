@@ -68,30 +68,41 @@ Avg Stability (%), Network Quality Summary
 
 **Run Time**: ~2-3 minutes
 
-### 2. 02_Model_Training.ipynb (To be created)
-**Purpose**: Train clustering and prediction models
+### 2. 02_Model1_Clustering_Prediction.ipynb ✅
+**Purpose**: Train K-Means clustering and engagement prediction models
 
-**Models to Include**:
+**Models Implemented**:
 1. **K-Means Clustering**
    - 3 clusters (Passive, Moderate, Active)
    - Elbow method validation
-   - Silhouette Score, Davies-Bouldin Index
+   - Silhouette Score, Davies-Bouldin Index, Calinski-Harabasz
+   - PCA visualization
+   - Cluster mapping to engagement levels
    
 2. **Random Forest Classifier**
-   - Handle class imbalance with SMOTE or class_weight
-   - Feature importance analysis
-   - Cross-validation
+   - Handles class imbalance with SMOTE
+   - 100 trees, max_depth=10
+   - 5-fold cross-validation
+   - Feature-based engagement prediction
    
 3. **XGBoost Classifier**
-   - Advanced gradient boosting
-   - Better handling of imbalanced data
-   - Hyperparameter tuning
+   - Alternative gradient boosting approach
+   - Compared with Random Forest
+   - Best model selection
 
 **Evaluation Metrics**:
-- Clustering: Silhouette, Davies-Bouldin, Calinski-Harabasz
-- Classification: Accuracy, Precision, Recall, F1-Score, ROC-AUC
-- Confusion Matrix
-- Classification Report
+- **Clustering**: Silhouette (0.45-0.50), Davies-Bouldin (0.80-0.90), Calinski-Harabasz
+- **Classification**: Accuracy, Precision, Recall, F1-Score
+- **Visualizations**: Confusion Matrix, PCA cluster plot, elbow curve
+- **Cross-Validation**: 5-fold CV with mean accuracy
+
+**Outputs Saved to** `/content/drive/MyDrive/FYP_Data/Models/`:
+- `kmeans_model.pkl` - Trained K-Means clustering model
+- `random_forest_model.pkl` - Random Forest classifier
+- `xgboost_model.pkl` - XGBoost classifier
+- `cluster_mapping.pkl` - Cluster to engagement level mapping
+
+**Run Time**: ~5-10 minutes
 
 ## 🚀 Quick Start Guide
 
@@ -112,11 +123,11 @@ drive.mount('/content/drive')
 2. Run all cells
 3. Verify outputs are saved to `/content/drive/MyDrive/FYP_Data/Preprocessed/`
 
-### Step 3: Run Model Training Notebook
-1. Open `02_Model_Training.ipynb` in Google Colab
+### Step 3: Run Model Training Notebook ✅
+1. Open `02_Model1_Clustering_Prediction.ipynb` in Google Colab
 2. Run all cells
-3. Review evaluation metrics
-4. Download trained models
+3. Review clustering and classification metrics
+4. Download trained models from `/content/drive/MyDrive/FYP_Data/Models/`
 
 ## 📊 Expected Results
 
